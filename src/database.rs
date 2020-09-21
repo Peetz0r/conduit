@@ -27,7 +27,7 @@ pub struct Database {
     pub key_backups: key_backups::KeyBackups,
     pub transaction_ids: transaction_ids::TransactionIds,
     pub sending: sending::Sending,
-    pub _db: sled::Db,
+    pub inner_db: sled::Db,
 }
 
 impl Database {
@@ -140,7 +140,7 @@ impl Database {
             sending: sending::Sending {
                 serverpduids: db.open_tree("serverpduids")?,
             },
-            _db: db,
+            inner_db: db,
         })
     }
 

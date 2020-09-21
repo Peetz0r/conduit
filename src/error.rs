@@ -1,6 +1,7 @@
 use log::error;
 use ruma::api::client::{error::ErrorKind, r0::uiaa::UiaaInfo};
 use thiserror::Error;
+use sled::transaction::ConflictableTransactionError;
 
 #[cfg(feature = "conduit_bin")]
 use {
@@ -93,5 +94,11 @@ where
             status_code,
         })
         .respond_to(r)
+    }
+}
+
+impl From<Error> for ConflictableTransactionError<Error> {
+    fn from(error: Error) -> Self {
+        ConflictableTransactionError::Abort(error)
     }
 }

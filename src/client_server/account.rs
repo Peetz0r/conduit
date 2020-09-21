@@ -31,7 +31,7 @@ const GUEST_NAME_LENGTH: usize = 10;
     feature = "conduit_bin",
     get("/_matrix/client/r0/register/available", data = "<body>")
 )]
-pub fn get_register_available_route(
+pub async fn get_register_available_route(
     db: State<'_, Database>,
     body: Ruma<get_username_availability::Request<'_>>,
 ) -> ConduitResult<get_username_availability::Response> {
